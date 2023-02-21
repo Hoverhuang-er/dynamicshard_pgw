@@ -12,13 +12,17 @@ func PushMetricsGetHashV2(w http.ResponseWriter, r *http.Request) {
 	node, err := PgwNodeRing.GetNode(path)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("get_node_from_hashring_error"))
+		if _, err := w.Write([]byte("get_node_from_hashring_error")); err != nil {
+			log.Printf("[PushMetrics][request_path:%s][write_error:%s]", path, err.Error())
+		}
 	}
 
 	nextUrl := "http://" + node + path
 	log.Printf("[PushMetrics][request_path:%s][redirect_url:%s]", path, nextUrl)
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("nextUrl:" + nextUrl))
+	if _, err := w.Write([]byte("nextUrl:" + nextUrl)); err != nil {
+		log.Printf("[PushMetrics][request_path:%s][write_error:%s]", path, err.Error())
+	}
 }
 
 // PushMetricsRedirectV2 is a function.
@@ -28,7 +32,9 @@ func PushMetricsRedirectV2(w http.ResponseWriter, r *http.Request) {
 	node, err := PgwNodeRing.GetNode(path)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("get_node_from_hashring_error"))
+		if _, err := w.Write([]byte("get_node_from_hashring_error")); err != nil {
+			log.Printf("[PushMetrics][request_path:%s][write_error:%s]", path, err.Error())
+		}
 		return
 	}
 	nextUrl := "http://" + node + path

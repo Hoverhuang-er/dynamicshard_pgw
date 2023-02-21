@@ -117,6 +117,8 @@ func (cc *ConsistConsul) NewConsistentRing() error {
 			cancelT()
 		})
 	}
-	g.Run()
+	if err := g.Run(); err != nil {
+		return err
+	}
 	return nil
 }
