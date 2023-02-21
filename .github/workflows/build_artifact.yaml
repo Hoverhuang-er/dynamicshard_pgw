@@ -16,12 +16,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build Docker image
         run: docker build -t ghcr.io/hoverhuang-er/dynamicshard_pgw/dyshard:latest .
       - name: push Docker image
         run: docker push ghcr.io/hoverhuang-er/dynamicshard_pgw/dyshard:latest
   BuildBinary:
+    needs: [BuildDockerImage]
     strategy:
       matrix:
         os: [ ubuntu-lastest, macos-lastest, windows-lastest ]

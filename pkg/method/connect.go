@@ -91,18 +91,16 @@ func RegisterFromFile(c *client, servers []string, srvName string, srvPort int) 
 func (c *client) RunRefreshServiceNode(ctx context.Context, srvName string, consulServerAddr string) error {
 	go RunReshardHashRing(ctx)
 
-	errchan := make(chan error, 1)
+	perchance := make(chan error, 1)
 	go func() {
-		errchan <- c.WatchService(ctx, srvName, consulServerAddr)
-
+		perchance <- c.WatchService(ctx, srvName, consulServerAddr)
 	}()
 	select {
 	case <-ctx.Done():
 		return nil
-	case err := <-errchan:
+	case err := <-perchance:
 		return err
 	}
-	return nil
 }
 
 func (c *client) WatchService(ctx context.Context, srvName string, consulServerAddr string) error {

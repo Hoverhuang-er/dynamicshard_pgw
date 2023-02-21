@@ -98,7 +98,9 @@ func (cc *ConsistConsul) NewConsistentRing() error {
 			})
 			ch.Route("/test/", func(ct chi.Router) {
 				ct.Get("/v1", func(w http.ResponseWriter, r *http.Request) {
-					w.Write([]byte("Hello, I'm pgw gateway+ (｡A｡"))
+					if _, err := w.Write([]byte("Hello, I'm pgw gateway+ (｡A｡")); err != nil {
+						return
+					}
 					return
 				})
 			})
