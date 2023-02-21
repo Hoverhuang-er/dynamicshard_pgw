@@ -2,7 +2,7 @@
 FROM docker.io/golang:alpine3.15 AS builder
 WORKDIR /opt
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /opt/app cmd/jiralert/main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /opt/app .
 # Build Artifacts
 FROM debian:10.10-slim
 WORKDIR /opt
