@@ -2,10 +2,6 @@ name: Build DockerImage and Binary.tar.gz
 
 on:
   push:
-    paths:
-      - "go.sum"
-      - "go.mod"
-      - "**.go"
     branches: [ main ]
 
 
