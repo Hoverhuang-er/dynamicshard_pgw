@@ -1,0 +1,24 @@
+name: Golang-ci to lint codebase
+
+on:
+  push:
+    paths:
+      - "go.sum"
+      - "go.mod"
+      - "**.go"
+    branches: [ main ]
+
+jobs:
+  golangci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19.x
+      - name: Lint
+        uses: golangci/golangci-lint-action@v3.2.0
+        with:
+          version: v1.45.2

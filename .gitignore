@@ -13,3 +13,13 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+bin/
+bin/*
+out/
+*.swp
+*.swo
+*.tar.gz
+docs/_site
+.idea/
+/.idea
+*DS_Store

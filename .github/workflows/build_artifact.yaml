@@ -1,0 +1,42 @@
+name: Build DockerImage and Binary.tar.gz
+
+on:
+  push:
+    paths:
+      - "go.sum"
+      - "go.mod"
+      - "**.go"
+    branches: [ main ]
+
+
+job:
+  BuildDockerImage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Login to ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Build Docker image
+        run: docker build -t ghcr.io/hoverhuang-er/dynamicshard_pgw/dyshard:latest .
+      - name: push Docker image
+        run: docker push ghcr.io/hoverhuang-er/dynamicshard_pgw/dyshard:latest
+  BuildBinary:
+    strategy:
+      matrix:
+        os: [ ubuntu-lastest, macos-lastest, windows-lastest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19.x
+      - run: go mod download
+      # Build Binary
+      - run: CGO_ENABLED=0 go build -trimpath -ldflags='-extldflags=-static' -tags musl,osusergo,netgo,sqlite_omit_load_extension -o dyshard -v .
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -r dyshard.zip dyshard

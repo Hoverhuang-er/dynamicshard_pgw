@@ -1,0 +1,13 @@
+ServiceDiscoveryType = 1
+HttpListenAddr = "8083"
+[SDServer]
+[SDServer.ConsulServer]
+Addr = "127.0.0.1:8500"
+Username = "admin"
+Password = "password"
+RegisterServiceName = "consistentring"
+[PGW]
+Servers = ["172.17.0.1"]
+Port = 9091
+[Dyshard]
+Port = 8082
