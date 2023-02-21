@@ -1,4 +1,4 @@
-module dynamicshard
+module github.com/Hoverhuang-er/dynamicshard
 
 go 1.19
 

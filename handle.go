@@ -1,8 +1,8 @@
 package main
 
 import (
-	"dynamicshard/pkg/conf"
-	"dynamicshard/pkg/method"
+	"github.com/Hoverhuang-er/dynamicshard/pkg/conf"
+	"github.com/Hoverhuang-er/dynamicshard/pkg/method"
 	"log"
 	"os"
 )
