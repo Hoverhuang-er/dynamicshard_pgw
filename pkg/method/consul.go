@@ -2,8 +2,8 @@ package method
 
 import (
 	"context"
-	"dynamicshard/pkg/conf"
 	"fmt"
+	"github.com/Hoverhuang-er/dynamicshard/pkg/conf"
 	"github.com/go-chi/chi/v5"
 	"github.com/oklog/run"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
